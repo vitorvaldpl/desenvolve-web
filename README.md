@@ -12,4 +12,9 @@ Adições:
 -  ./src/Components/MeetingBox.js
 -  ./src/Pages/PerfilGlobal.js
 -  ./src/Styles/EmptyCardStyle.js
-Remoções:
+Remoções: Nenhuma
+
+Data:30/06/2021   Hora:10:55
+Edição: Vitor
+Adições:
+- Layout de botões para criar nova reunião no display de reuniões e no card(Front).

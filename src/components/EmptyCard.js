@@ -6,9 +6,11 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import EmptyCardStyle from '../Styles/EmptyCardStyle';
 import { blue } from 'chalk';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 
 const useEmptyCard = makeStyles ({
+
   cardBox: {
     height: 126,
     width: 402,
@@ -35,15 +37,11 @@ const useEmptyCard = makeStyles ({
     color:'#4D4D4D ' ,
 
   },
-  buttonDisplayBox: {
-    height: 15.5,
-    width: 15.5,
-    background: 'black',
-    border: 6,
-    borderRadius: 4,
+  AddBoxIcon: {
+    width: '100%',    
     marginLeft:193.25,
     marginTop:15.25,
-
+    color:'#4D4D4D',
   },
 
 
@@ -58,7 +56,9 @@ export function EmptyCard() {
                           <div className={classes.titleBox}>
                                     <a>Não há gerenciamento de feedback criado</a>
                           </div>  
-                          <div className={classes.buttonDisplayBox}>
+                      
+                         <div className={classes.AddBoxIcon}>
+                                        <AddBoxIcon />  
                           </div>            
                   </div>   
                   
@@ -74,10 +74,11 @@ export function EmptyCardOKR() {
 
                   <div className={classes.cardBox}>
                           <div className={classes.titleBox}>
-                                    <a>Não há gerenciamento de feedback OKR criado</a>
+                                    <a>Não há gerenciamento de feedback criado</a>
                           </div>  
-                          <div className={classes.buttonDisplayBox}>
-                          </div>            
+                          <div className={classes.AddBoxIcon}>
+                                        <AddBoxIcon />  
+                          </div>          
                   </div>   
                   
 
