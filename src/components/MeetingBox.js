@@ -4,11 +4,12 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { EmptyCard } from '../components/EmptyCard';
-import { EmptyCardOKR } from '../components/EmptyCard';
+import { EmptyCard } from '../components/Card';
+import { EmptyCardOKR } from '../components/Card';
+import { FeedbackCard } from '../components/Card';
 import { blue } from 'chalk';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 
 const useMeetingBox = makeStyles ({
@@ -42,8 +43,11 @@ const useMeetingBox = makeStyles ({
     widht: '100%',
     MaxWidth: 258,
     marginTop:6,
-    
-
+    borderBottomWidth:3,
+    borderBottomStyle: 'solid',
+    borderBottomColor:'#3E3990',
+  },
+  textTitleDisplayBox: {
     fontFamily: 'Poppins',
     fontSize: 16,
     fontStyle: 'normal',
@@ -51,7 +55,7 @@ const useMeetingBox = makeStyles ({
     letterSpacing: 0,
     textAlign: 'left',
     color:'#4D4D4D ' ,
-    textDecoration: 'underline',
+    textDecoration: 'none',
   },
   cardBox: {
     height: 126,
@@ -74,14 +78,14 @@ const useMeetingBox = makeStyles ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  InfoIcon: {
+  InfoOutlinedIcon: {
     height:'100%',
     maxHeight: 12.5,
     widht: '100%',
     MaxWidth: 12.5,
     marginLeft: 8.25,
     marginTop:12.25,
-    color:'#4D4D4D',
+    color:'#D1C4E9',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -98,30 +102,30 @@ export function MeetingBox() {
                       <div className={classes.halfBox}>
                                   <div className={classes.displayBox}>
                                             <div className={classes.titleDisplayBox}>
-                                                  Reuniões Feedback Estruturado
-                                          </div>  
-                                          <div className={classes.InfoIcon}>
-                                                  <InfoIcon />                                                      
-                                          </div>  
-                                          <div className={classes.AddBoxIcon}>
+                                                    <a className={classes.textTitleDisplayBox}>Reuniões Feedback Estruturado</a>
+                                            </div>  
+                                            <div className={classes.InfoOutlinedIcon}>
+                                                  <InfoOutlinedIcon />                                                      
+                                            </div>  
+                                            <div className={classes.AddBoxIcon}>
                                                   <AddBoxIcon />                                                      
-                                          </div>  
+                                            </div>  
                                 </div> 
                                 <div className={classes.cardBox}>
-                                <EmptyCard />
+                                <FeedbackCard />
                                 </div>  
                       </div>            
                       <div className={classes.halfBox}>
                                   <div className={classes.displayBox}>
                                             <div className={classes.titleDisplayBox}>
-                                                  Reuniões OKR's
-                                          </div>  
-                                          <div className={classes.InfoIcon}>
-                                                  <InfoIcon />                                                      
-                                          </div>  
-                                          <div className={classes.AddBoxIcon}>
+                                                  <a className={classes.textTitleDisplayBox}>Reuniões OKR's</a>
+                                            </div>  
+                                            <div className={classes.InfoOutlinedIcon}>
+                                                  <InfoOutlinedIcon />                                                      
+                                            </div>  
+                                            <div className={classes.AddBoxIcon}>
                                                   <AddBoxIcon />                                                      
-                                          </div>  
+                                            </div>  
                                 </div> 
                                 <div className={classes.cardBox}>
                                   <EmptyCardOKR />
