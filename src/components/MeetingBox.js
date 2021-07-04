@@ -1,18 +1,19 @@
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import { EmptyCard } from '../components/Card';
 import { EmptyCardOKR } from '../components/Card';
 import { FeedbackCard } from '../components/Card';
-import { blue } from 'chalk';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import Tooltip from 'react-tooltip'; 
+import { openCard } from '../components/Card';
+
+//yarn add react-tooltip
 
 
-const useMeetingBox = makeStyles ({
+
+
+const useMeetingBoxStyle = makeStyles ({
   meetingBox: {
     height: 181,
     width: 894,
@@ -56,6 +57,7 @@ const useMeetingBox = makeStyles ({
     textAlign: 'left',
     color:'#4D4D4D ' ,
     textDecoration: 'none',
+    
   },
   cardBox: {
     height: 126,
@@ -65,6 +67,22 @@ const useMeetingBox = makeStyles ({
     borderRadius: 8,
     marginLeft:19,
     marginTop:10,
+  },
+  button:{
+    background: 'none',
+    border:'none',
+    height:'100%',
+    maxHeight: 15.5,
+    widht: '100%',
+    MaxWidth: 15.5,
+    marginTop:11.25,
+    color:'#4D4D4D',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'left',
+    cursor: 'pointer',
+
+
   },
   AddBoxIcon: {
     height:'100%',
@@ -77,7 +95,12 @@ const useMeetingBox = makeStyles ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  
   },
+
+  //Não consegui fazer o icone INFO ter o max de tamanho desejado
+  //ele está ultrapassando este tamanho, isso desconfigura 
+  //a distancia do topo da caixa
   InfoOutlinedIcon: {
     height:'100%',
     maxHeight: 12.5,
@@ -88,30 +111,48 @@ const useMeetingBox = makeStyles ({
     color:'#D1C4E9',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+                      
   },
 
 });
 
 export function MeetingBox() {
-  const classes = useMeetingBox();
+  const classes = useMeetingBoxStyle();
 
   return (
-
                   <div className={classes.meetingBox}>
                       <div className={classes.halfBox}>
                                   <div className={classes.displayBox}>
                                             <div className={classes.titleDisplayBox}>
                                                     <a className={classes.textTitleDisplayBox}>Reuniões Feedback Estruturado</a>
                                             </div>  
+
                                             <div className={classes.InfoOutlinedIcon}>
-                                                  <InfoOutlinedIcon />                                                      
+                                                                <p
+                                                                data-tip="Feedback estruturado é o protocolo semestral de coletar feedback do seu desenvolvimento na empresa com outros crafters." 
+                                                                data-trigger ="hover"
+                                                                databondary="scrollParent"
+                                                                data-place="left"
+                                                                data-multiline="true"
+                                                                data-border="true"
+                                                                data-border-color="none"
+                                                                data-text-color="black"
+                                                                data-background-color="#FCF8FF"
+                                                                >
+                                                                <InfoOutlinedIcon />    
+                                                                <Tooltip /> 
+                                                                </p>                                                    
                                             </div>  
-                                            <div className={classes.AddBoxIcon}>
-                                                  <AddBoxIcon />                                                      
-                                            </div>  
+                                            
+                                            <button  className={classes.button} onclick=' '  >
+                                            <AddBoxIcon />                                                      
+                                            </button>
+                                            <button  className={classes.button} onclick=' '  >
+                                            <DeleteOutlineOutlinedIcon />                                                      
+                                            </button>
                                 </div> 
                                 <div className={classes.cardBox}>
+                                    {/* Aqui vai chamar uma função verifica feedback e nao o card */}
                                 <FeedbackCard />
                                 </div>  
                       </div>            
@@ -121,21 +162,35 @@ export function MeetingBox() {
                                                   <a className={classes.textTitleDisplayBox}>Reuniões OKR's</a>
                                             </div>  
                                             <div className={classes.InfoOutlinedIcon}>
-                                                  <InfoOutlinedIcon />                                                      
+                                                        <p
+                                                        data-tip="Reuniões de OKR são as de definições e  acompanhamento para ver o desenvolvimento das suas OKRS de maestria." 
+                                                        data-trigger ="hover"
+                                                        databondary="scrollParent"
+                                                        data-place="left"
+                                                        data-multiline="true"
+                                                        data-border="true"
+                                                        data-border-color="none"
+                                                        data-text-color="black"
+                                                        data-background-color="#FCF8FF"
+                                                        >
+                                                        <InfoOutlinedIcon />    
+                                                        <Tooltip /> 
+                                                        </p>                                                    
                                             </div>  
-                                            <div className={classes.AddBoxIcon}>
-                                                  <AddBoxIcon />                                                      
-                                            </div>  
+                                            <button  className={classes.button} onclick=' '  >
+                                            <AddBoxIcon />                                                      
+                                            </button>
                                 </div> 
+                                
                                 <div className={classes.cardBox}>
+                                  {/* Aqui vai chamar uma função OKR que retornara o card okr ou empty card, similar a feedback já criada */}
                                   <EmptyCardOKR />
                                 </div>  
                       </div>    
                   </div>   
-                  
-
-
   );
 }
+
+
 
 
