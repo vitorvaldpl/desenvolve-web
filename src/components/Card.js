@@ -11,6 +11,7 @@ import { attCardOkrUser } from './Functions';
 import { deleteOkrCycle } from './Functions';
 import { attCardUser } from './Functions';
 import { deleteFeedbackCycle } from './Functions';
+import { CreateUser } from './UserProfile';
 
 
 
@@ -397,37 +398,10 @@ alert(perfil.feedback.LastMeeting);
     const perfil2 = CreateUser();  // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas
     const perfil =  attCardUser(perfil2);    
     console.log(perfil);
-    alert(perfil.feedback.existCycle);
+    alert(perfil.feedback.lastMeeting);
   return(perfil);  
   }
-  export function CreateUser(){
-    //Função para criar o usuário
-    const profileUserBancoDeDados = 
-  {        
-                                      user: "Usuário 1",
-                                      username: 'User1',
-                                      email: 'user1@dtidesenvolve.proj',
-                                      feedback:{
-                                              lastMeeting: '',    
-                                              cycle: '',
-                                              nextCycle: '',
-                                              firstMeeting: '',
-                                              totalCycles: '',
-                                              status: '',
-                                              existCycle: '', // essa variavel é pra controle
-                                              },
-                                      okr:{
-                                              lastMeeting: '',
-                                              cycleDuration: '',
-                                              nextMeeting: '',
-                                              totalCycles:'',
-                                              status: '',  
-                                              existCycle: '', 
-                                            
-                                        }  ,
-    }
-return(profileUserBancoDeDados);
-}
+
 export function getUser(userPerfil) {
   //Função para receber o usuário
     const profileUserBancoDeDados = userPerfil;
