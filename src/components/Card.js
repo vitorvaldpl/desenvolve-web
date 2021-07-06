@@ -2,6 +2,19 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import { getTeste } from './Functions';
+import { getTesteOkr } from './Functions';
+import { getTesteCreateOkr } from './Functions';
+import { createNewFeedbackCycle } from './Functions';
+import { createNewOkrCycle } from './Functions';
+import { attCardOkrUser } from './Functions';
+import { deleteOkrCycle } from './Functions';
+import { attCardUser } from './Functions';
+import { deleteFeedbackCycle } from './Functions';
+
+
+
+
 
 
 const useCard = makeStyles ({
@@ -164,11 +177,8 @@ const useCard = makeStyles ({
     alignItems: 'center',
     justifyContent: 'left',
     cursor: 'pointer',
-
-    background: 'yellow',
   },
   buttonNew:{
-
     border:'none',
     height:'100%',
     maxHeight: 15.5,
@@ -179,6 +189,7 @@ const useCard = makeStyles ({
     alignItems: 'left',
     justifyContent: 'left',
     cursor: 'pointer',
+    background: 'none',
 
 
   },
@@ -194,9 +205,6 @@ const useCard = makeStyles ({
     alignItems: 'center',
     justifyContent: 'left',
     cursor: 'pointer',
-
-    
-    background: 'yellow',
   },
 
   boxDisplayAdd: {
@@ -214,27 +222,13 @@ const useCard = makeStyles ({
 });
 
 
-
 export function FeedbackCard() {
   // coloquei inicialmente td aqui dentro dessa função, posteriormente vai sair e ir pra uma verificar status, card etc e que vai chamar essa aqui
   const classes = useCard();
-  const perfil = getUser();
-  let statusColor = { 'em dia': {
-                                          color:'red',
-                                    },
-                                'atrasado': {
-                                      color:'blue',
-                                },
-  };
-  const status = perfil.feedback.status;
-  console.log(status);
-  console.log('to olhando o status');
-  console.log(statusColor);
-  
-  const existCycle = perfil.feedback.existCycle;
-  
+  const userPerfil = CreateUser();
+  const perfil = getUser(userPerfil);  
 
-                                        if (existCycle == 'true'){  
+                                        if (perfil.feedback.existCycle === true){  
 
                                         return (
                                                         <div className={classes.cardBox}>
@@ -250,7 +244,12 @@ export function FeedbackCard() {
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.feedback.nextCycle}</a>
                                                                                                             </div>
                                                                                                             <div className={classes.displayStatusColumn}>
-                                                                                                                        <a className={classes.textDisplayBold}>Último Feedback</a>
+                                                                                                                          <div className={classes.boxDisplayAdd}>
+                                                                                                                          <a className={classes.textDisplayBold}>Último Feedback</a>
+                                                                                                                                        <button className={classes.buttonNew} onClick={()=> attCardButton()} >
+                                                                                                                                        <MoreVertOutlinedIcon />                                                    
+                                                                                                                                        </button>                                                                                                                                        
+                                                                                                                        </div>    
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.feedback.lastMeeting}</a>
                                                                                                             </div>  
                                                                                     </div>
@@ -277,7 +276,7 @@ export function FeedbackCard() {
                                       
                                       }
 
-                                        if (existCycle == 'false')  {
+                                        if (perfil.feedback.existCycle === false)  {
                                           
                                           return (
                                             <div className={classes.cardBox}>
@@ -286,7 +285,7 @@ export function FeedbackCard() {
                                                     </div>  
                                                 
                                                    <div className={classes.AddBoxIcon} >
-                                                   <button   className={classes.button} onclick='' >
+                                                   <button   className={classes.buttonNew} onClick={()=> addNewFeedbackCardButton()}  >
                                                                       <AddBoxIcon />                                                      
                                                                       </button>          
                                                                       
@@ -297,12 +296,11 @@ export function FeedbackCard() {
                                  }
 }
 
- export function EmptyCardOKR() {
+ export function CardOKR() {
   const classes = useCard();  
-  const perfil = getUser();
-  const existCycle = perfil.okr.existCycle;
-  
-                                        if (existCycle == 'true'){  
+  const userPerfil = CreateUser();
+  const perfil = getUser(userPerfil); 
+                                        if (perfil.okr.existCycle === true){  
 
                                         return (
                                                         <div className={classes.cardBox}>
@@ -311,7 +309,11 @@ export function FeedbackCard() {
                                                                                     
                                                                                                             <div className={classes.displayStatusLine}>
                                                                                                                         <a className={classes.textDisplayNormal}>Status: </a>
-                                                                                                                        <a className={classes.textDisplayStatus} style={{color:perfil.okr.status === 'em dia' ? '#00B4C5' : '#E82F58'}} >{perfil.okr.status}</a>
+                                                                                                                        <a className={classes.textDisplayStatus} style={
+
+                                                                                                                                              ({color:perfil.okr.status === 'atrasado' ? '#E82F58' : '#00B4C5'})
+                                                                                                                                                                                                                                              
+                                                                                                                          } >{perfil.okr.status}</a>
                                                                                                             </div>  
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                         <a className={classes.textDisplayBold}>Próxima reunião</a>
@@ -320,9 +322,9 @@ export function FeedbackCard() {
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                         <div className={classes.boxDisplayAdd}>
                                                                                                                                         <a className={classes.textDisplayBold}>Última reunião de Okr</a>
-                                                                                                                                        <a className={classes.buttonNew} >
+                                                                                                                                        <button className={classes.buttonNew} onClick={()=> alertFunction()}>
                                                                                                                                         <MoreVertOutlinedIcon />                                                    
-                                                                                                                                        </a>                                                                                                                                        
+                                                                                                                                        </button>                                                                                                                                        
                                                                                                                         </div>      
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.okr.lastMeeting}</a>       
                                                                                                             </div>  
@@ -338,6 +340,8 @@ export function FeedbackCard() {
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.okr.cycleDuration} meses</a>
                                                                                                             </div>
                                                                                                             <div className={classes.displayStatusColumn}>
+                                                                                                            <a className={classes.textDisplayBold}>Ciclo total(vai sair essa div, só pra visualização)</a>
+                                                                                                                        <a className={classes.textDisplayNormal}>{perfil.okr.totalCycles}</a>
                                                                                                               </div>
 
                                                                                     </div>  
@@ -347,7 +351,7 @@ export function FeedbackCard() {
                                       
                                       }
 
-                                        if (existCycle == 'false')  {
+                                        if (perfil.okr.existCycle === false)  {
                                             
                                         return (
                                                         <div className={classes.cardBox}>
@@ -355,7 +359,7 @@ export function FeedbackCard() {
                                                                           <a>Não há gerenciamento de feedback criado</a>
                                                                 </div>  
                                                                 <div className={classes.AddBoxIcon}>
-                                                                                  <button  className={classes.button} >
+                                                                                  <button  className={classes.buttonNew}onClick={()=> alertFunction()} >
                                                                                   <AddBoxIcon />                                                    
                                                                                   </button>
                                                                   </div>    
@@ -364,15 +368,40 @@ export function FeedbackCard() {
                                         }
 } 
 
+function alertFunction() {
+  alert("I am an alert box!");
+}
+export function getAddLastFeedback(userPerfil){
+const perfil = getUser(userPerfil); 
+perfil.feedback.LastMeeting = '20/06/2021';
+console.log(perfil.feedback.LastMeeting);
+alert(perfil.feedback.LastMeeting);
 
-
-export function getTeste(){
-  var teste = 2;
-  return(teste);
+  return(perfil);
   }
-
-export function getUser() {
-  //Função para receber o usuário
+  export function addNewFeedbackCardButton(){
+    const perfil2 = CreateUser();   // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas 
+    const perfil =  createNewFeedbackCycle(perfil2);    
+    console.log(perfil);
+    alert(perfil.feedback.lastMeeting);
+  return(perfil);  
+  }
+  export function deleteFeedbackCardButton(){
+    const perfil2 = CreateUser();  // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas
+    const perfil =  deleteFeedbackCycle(perfil2);    
+    console.log(perfil);
+    alert(perfil.feedback.existCycle);
+  return(perfil);  
+  }
+  export function attCardButton(){
+    const perfil2 = CreateUser();  // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas
+    const perfil =  attCardUser(perfil2);    
+    console.log(perfil);
+    alert(perfil.feedback.existCycle);
+  return(perfil);  
+  }
+  export function CreateUser(){
+    //Função para criar o usuário
     const profileUserBancoDeDados = 
   {        
                                       user: "Usuário 1",
@@ -391,31 +420,45 @@ export function getUser() {
                                               lastMeeting: '',
                                               cycleDuration: '',
                                               nextMeeting: '',
+                                              totalCycles:'',
                                               status: '',  
-                                              existCycle: 'true', 
+                                              existCycle: '', 
                                             
                                         }  ,
     }
+return(profileUserBancoDeDados);
+}
+export function getUser(userPerfil) {
+  //Função para receber o usuário
+    const profileUserBancoDeDados = userPerfil;
     //Teste funcional para verificar a criação, edição e delete de cards. 
     //Cria e edita estão com estruturas iguais por enquanto, quando 
     // criar função de edição eles ficarão com estrutura diferente
     // 1 = cria    2 = edita   3= deleta
     const teste = getTeste();
-    
-
+    const testeOkr = getTesteOkr();
                                   if (teste == 1){
-                                    const  createProfileUser = createNewFeedbackCycle(profileUserBancoDeDados);
-                                    return (createProfileUser);
+                                    const createProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
+                                    const  createProfileUserSent = createNewFeedbackCycle(createProfileUser);
+                                    return (createProfileUserSent);
                                   }
                                   else if  (teste == 2){
-                                    const  attProfileUser = attCardUser(profileUserBancoDeDados);
-                                    return (attProfileUser);
+                                    const  attProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
+                                    const  attProfileUserSent = attCardUser(attProfileUser);
+                                    return (attProfileUserSent);
                                   }
                                   if (teste == 3){
-                                    const  deleteProfileUser = deleteFeedbackCycle(profileUserBancoDeDados);
-                                    return (deleteProfileUser);
+                                    const deleteProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
+                                  const  deleteProfileUserSent = deleteFeedbackCycle(deleteProfileUser);
+                                    return (deleteProfileUserSent);
+                                  }
+                                  else {
+                                  return(profileUserBancoDeDados);
+                                  console.log('chegou condição 4');
+                                  console.log(profileUserBancoDeDados.feedback.status);
                                   }
 }
+
 
 //NEssa função devo receber o onclick da tela adicionar reuniao com os parametros depois salvar no usuario
 // attCardUser(profileUser, var1, var2, var3, var4) sendo var 1,2,3 os parametros que vem da tela 
@@ -426,196 +469,4 @@ export function getUser() {
 //attcard ou createnewfeedcycle poderão ser usados como função ponte do calculo status
 //cujo se pegará as info do banco de dados e realizar o calculo da função
 // tem a possibilidade dessa conta ser feita direto no backend(verificar possibilidade)
-
-export function createNewFeedbackCycle(profileUser){
-  //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-  perfil.feedback.lastMeeting = '12/02/2021' ;
-  //perfil.feedback.lastMeeting = var1 ;
-  perfil.feedback.cycle = 3;
-  //perfil.feedback.cycle = var2;
-  perfil.feedback.firstMeeting = '12/01/2021';
-  //perfil.feedback.firstMeeting = var3  ;
-  perfil.feedback.totalCycles = '';   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
-  perfil.feedback.totalCycles = contTotalCycles(perfil);
-  perfil.feedback.existCycle = 'true';
-  perfil.feedback.nextCycle = calculateFeedbackNextCycle(profileUser);
-  perfil.feedback.status = CalculateStatus(profileUser);
-  
-   createNewOkrCycle(profileUser);
-
-
-return(perfil);
-}
-
-export function attCardUser(profileUser){
-    const perfil = profileUser;
-  perfil.feedback.lastMeeting = '02/05/2021' ;
-  //perfil.feedback.lastMeeting = var1 ;
-  perfil.feedback.cycle = 6;
-  //perfil.feedback.cycle = var2;
-  perfil.feedback.firstMeeting = '12/01/2021';
-  //perfil.feedback.firstMeeting = var3  ;
-  perfil.feedback.totalCycles = 2;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
-  perfil.feedback.totalCycles = contTotalCycles(perfil);
-  perfil.feedback.existCycle = 'true';
-  perfil.feedback.nextCycle = calculateFeedbackNextCycle(profileUser);
-  perfil.feedback.status = CalculateStatus(profileUser);
-
-  attCardOkrUser(profileUser);
-
-return(perfil);
-}
-
-export function deleteFeedbackCycle(profileUser){
-  //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-  perfil.feedback.lastMeeting = '' ;
-  perfil.feedback.cycle = '';
-  perfil.feedback.firstMeeting = '';
-  perfil.feedback.totalCycles = 0;
-  perfil.feedback.existCycle = 'false';
-  perfil.feedback.nextCycle = '' ;
-  perfil.feedback.status = '' ;
-  
-  deleteOkrCycle(profileUser);
-return(perfil);
-}
-
-export function createNewOkrCycle(profileUser){
-  //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-  perfil.okr.lastMeeting = '12/02/2021' ;
-  //perfil.okr.lastMeeting = var1 ;
-  perfil.okr.cycleDuration = 3;
-  //perfil.okr.cycleDuration = var2;
-  perfil.okr.existCycle = 'true';
-  //aqui vai mudar, vai ser uma função de calcular em OKR
-  perfil.okr.nextMeeting = calculateFeedbackNextCycle(profileUser);
-  perfil.okr.status = CalculateStatus(profileUser);
-  
-return(perfil);
-}
-
-export function attCardOkrUser(profileUser){
-    const perfil = profileUser;
-    perfil.okr.lastMeeting = '12/02/2021' ;
-    //perfil.okr.lastMeeting = var1 ;
-    perfil.okr.cycleDuration = 6;
-    //perfil.okr.cycleDuration = var2;
-    perfil.okr.existCycle = 'true';
-    //aqui vai mudar, vai ser uma função de calcular em OKR
-    perfil.okr.nextMeeting = calculateFeedbackNextCycle(profileUser);
-    perfil.okr.status = CalculateStatus(profileUser);
-
-
-return(perfil);
-}
-
-export function deleteOkrCycle(profileUser){
-  //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-    perfil.okr.lastMeeting = '' ;
-    //perfil.okr.lastMeeting = var1 ;
-    perfil.okr.cycleDuration = '' ;
-    //perfil.okr.cycleDuration = var2;
-    perfil.okr.existCycle = 'false';
-    //aqui vai mudar, vai ser uma função de calcular em OKR
-    perfil.okr.nextMeeting = '' ;
-    perfil.okr.status = '' ;
-
-  
-return(perfil);
-}
-
-
-
-export function contTotalCycles(profileUser){
-  const perfil = profileUser;
-  perfil.feedback.totalCycles += 1; 
-  return(perfil.feedback.totalCycles);
-}
-export function verifyFeedbackCycle(profileUser){
-  const perfil = profileUser;
-  const verifyFeedbackCycle = perfil.feedback.existCycle; 
-  return(verifyFeedbackCycle);
-}
-export function verifyOkrCycle(profileUser){
-  const perfil = profileUser;
-  const verifyOkrCycle = perfil.okr.existCycle; 
-  return(verifyOkrCycle);
-}
-
-export function MultiplierMonthDays(TimeCycle){
-  var Days = 30 ;  
-  var Mult = TimeCycle * Days;
-  return(Mult);
-}
-
-export function CalculateStatus(profileUser){
-  const perfil = profileUser;
-  const LastMeeting = perfil.feedback.lastMeeting;
-  const TimeCycle = MultiplierMonthDays(perfil.feedback.cycle) ; 
-  const CalculateStatus = CalculateDiffDate(LastMeeting) ;
-                    if (CalculateStatus <=TimeCycle ){
-                     const status = 'em dia';
-                      return (status);
-
-                    }
-                   if  (CalculateStatus > TimeCycle ){
-                    const status = 'atrasado';
-                    return (status);
-                    
-                    }
-
-                    else{
-                      var teste = null;
-                      return(teste);
-                          }
-}
-
-export function CalculateDiffDate(LastMeeting ){
-  var lastDate = TransformDate(LastMeeting) ; 
-  var currentData = new Date();
-  var timeDiff = Math.abs(currentData.getTime() - lastDate.getTime());
-  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-  return(diffDays);
-}
-
-export function TransformDate(stringDate){
-let date = stringDate;
-// Precisamos quebrar a string para retornar cada parte
-const dateSplit = date.split('/');
-const day = dateSplit[0]; 
-const month = dateSplit[1]; 
-const year = dateSplit[2]; 
-// Agora podemos inicializar o objeto Date, lembrando que o mês começa em 0, então fazemos -1.
-date = new Date(year, month - 1, day);
-return(date);
-}
-
-export function calculateFeedbackNextCycle(profileUser){
-  const perfil = profileUser;
-  //é valido Salvar as reuniões em um vetor? total de ciclos ficaria função lenght
-  const LastMeeting = perfil.feedback.lastMeeting;
-  const TimeCycle = MultiplierMonthDays(perfil.feedback.cycle) ; 
-  const NextCycle = CalculateNextCycle(LastMeeting , TimeCycle);
-  return (NextCycle);
-  }
-
-export function CalculateNextCycle(LastMeeting , TimeCycle){
-  var lastDate = TransformDate(LastMeeting) ;  
-  var timeDiff = Math.abs((TimeCycle*(1000 * 3600 * 24) + lastDate.getTime()));
-  var DateTransformed = formatDateToString(timeDiff);
-return(DateTransformed);  
-}
-
-function formatDateToString(getDate){
-  var date =  new Date(getDate);
-    var day = (date.getDate() < 10 ? '0' : '') + date.getDate();
-  var month = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
-    var year = date.getFullYear();
- var DateTransformed = day +"/"+ month +"/"+ year;
-  return (DateTransformed);
-}
 

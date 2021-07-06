@@ -1,12 +1,15 @@
 
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { EmptyCardOKR } from '../components/Card';
+import { CardOKR } from '../components/Card';
 import { FeedbackCard } from '../components/Card';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import Tooltip from 'react-tooltip'; 
 import { openCard } from '../components/Card';
+import { addNewFeedbackCardButton } from '../components/Card';
+import { deleteFeedbackCardButton } from './Card';
+
 
 //yarn add react-tooltip
 
@@ -144,10 +147,10 @@ export function MeetingBox() {
                                                                 </p>                                                    
                                             </div>  
                                             
-                                            <button  className={classes.button} onclick=' '  >
+                                            <button  className={classes.button} onClick={()=> addNewFeedbackCardButton()}  >
                                             <AddBoxIcon />                                                      
                                             </button>
-                                            <button  className={classes.button} onclick=' '  >
+                                            <button  className={classes.button} onClick={()=> deleteFeedbackCardButton()}  >
                                             <DeleteOutlineOutlinedIcon />                                                      
                                             </button>
                                 </div> 
@@ -184,7 +187,7 @@ export function MeetingBox() {
                                 
                                 <div className={classes.cardBox}>
                                   {/* Aqui vai chamar uma função OKR que retornara o card okr ou empty card, similar a feedback já criada */}
-                                  <EmptyCardOKR />
+                                  <CardOKR />
                                 </div>  
                       </div>    
                   </div>   
