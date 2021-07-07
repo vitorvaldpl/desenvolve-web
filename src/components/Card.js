@@ -2,6 +2,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+
 import { getTeste } from './Functions';
 import { getTesteOkr } from './Functions';
 import { getTesteCreateOkr } from './Functions';
@@ -319,8 +320,9 @@ export function FeedbackCard() {
                                                                                                                         <div className={classes.boxDisplayAdd}>
                                                                                                                                         <a className={classes.textDisplayBold}>Última reunião de Okr</a>
                                                                                                                                         <button className={classes.buttonNew} onClick={()=> alertFunction()}>
-                                                                                                                                        <MoreVertOutlinedIcon />                                                    
-                                                                                                                                        </button>                                                                                                                                        
+                                                                                                                                        <MoreVertOutlinedIcon />       
+                                                                                                                                                                                     
+                                                                                                                                        </button>                                                                                                                                                                                                                                                                            
                                                                                                                         </div>      
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.okr.lastMeeting}</a>       
                                                                                                             </div>  
@@ -336,6 +338,7 @@ export function FeedbackCard() {
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.okr.cycleDuration} meses</a>
                                                                                                             </div>  
                                                                                                             <div className={classes.displayStatusColumn}>
+                                                                                                                              
                                                                                                             </div>                                                                                                        
                                                                                     </div>  
                                                                     </div>      

@@ -3,41 +3,36 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { CreateUser } from './UserProfile';
-export function getDateFeedbackTest(){
-    const getDate = '02/05/2021';
+export function getDateFeedbackTest(){ //Data manual que será enviada para o card Feedback
+  const getDate = '28/05/2021';
   return(getDate);
   }
-  export function getDateOkrTest(){
-    const getDate = '09/06/2021';
+  export function getDateOkrTest(){ //Data manual que será enviada para o card  Okr
+  const getDate = '09/06/2021';
   return(getDate);
   }
-  export function getDateFirstFeedback(){
-    const getDate = '02/05/2021';
+  export function getDateFirstFeedback(){ //Data manual do 1° Feedback que será enviada para o card Feedback
+  const getDate = '28/05/2021';
   return(getDate);
   }
-  export function getFinishedOkrTest(){
-    //Conferir ciclo Finalizado, será o numero de reuniões que ja houve no periodo
-    // se tiver 5, incrementara e irá pra 6 lá na função attOkrcard e ficara finalizado 
+  export function getFinishedOkrTest(){    //Conferir ciclo Finalizado, será o numero de reuniões que ja houve no periodo
+    // Exemplo se tiver 5, incrementara e irá pra 6 lá na função attOkrcard e ficara finalizado 
     const getCycles = 4;
   return(getCycles);
   }
-export function getTeste(){
-    // 1 = card  2 = card vazio
+export function getTeste(){  // 1 = card  2 = card vazio
   var teste= 1;
   return(teste);
   }
-  export function getTesteOkr(){
-    // 1 = card  2 = card vazio
+  export function getTesteOkr(){ // 1 = card  2 = card vazio    
     var teste= 1;
     return(teste);
     }
-    export function getCycleFeedback(){
-      // 3 = ciclo 3 meses   6= ciclo de 6 meses
+    export function getCycleFeedback(){  // 3 = ciclo 3 meses   6= ciclo de 6 meses
       var cycle= 3;
       return(cycle);
       }
-      export function getCycleOkr(){
-        // 3= ciclo 3 meses   6 = ciclo de 6 meses
+      export function getCycleOkr(){  // 3= ciclo 3 meses   6 = ciclo de 6 meses
         var cycle= 6;
         return(cycle);
         }
@@ -137,9 +132,7 @@ export function attCardUser(profileUser){
     const cycle= getCycleFeedback();
   perfil.feedback.cycle = cycle;  
   const getFirstFeedback = getDateFirstFeedback();
-  perfil.feedback.lastMeeting = getFirstFeedback;
-  perfil.feedback.firstMeeting = '12/01/2021';
-//  perfil.feedback.totalCycles = 2;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
+  perfil.feedback.firstMeeting = getFirstFeedback;
   perfil.feedback.totalCycles = contTotalCycles(perfil);
   perfil.feedback.existCycle = true;
   perfil.feedback.nextCycle = calculateFeedbackNextCycle(profileUser);
