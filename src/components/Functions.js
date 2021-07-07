@@ -2,26 +2,52 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
-
+import { CreateUser } from './UserProfile';
+export function getDateFeedbackTest(){
+    const getDate = '02/05/2021';
+  return(getDate);
+  }
+  export function getDateOkrTest(){
+    const getDate = '09/06/2021';
+  return(getDate);
+  }
+  export function getDateFirstFeedback(){
+    const getDate = '02/05/2021';
+  return(getDate);
+  }
+  export function getFinishedOkrTest(){
+    //Conferir ciclo Finalizado, será o numero de reuniões que ja houve no periodo
+    // se tiver 5, incrementara e irá pra 6 lá na função attOkrcard e ficara finalizado 
+    const getCycles = 4;
+  return(getCycles);
+  }
 export function getTeste(){
+    // 1 = card  2 = card vazio
   var teste= 1;
   return(teste);
   }
   export function getTesteOkr(){
-    var teste= 2;
+    // 1 = card  2 = card vazio
+    var teste= 1;
     return(teste);
     }
+    export function getCycleFeedback(){
+      // 3 = ciclo 3 meses   6= ciclo de 6 meses
+      var cycle= 3;
+      return(cycle);
+      }
+      export function getCycleOkr(){
+        // 3= ciclo 3 meses   6 = ciclo de 6 meses
+        var cycle= 6;
+        return(cycle);
+        }
 
   export function getTesteCreateOkr(profileUserBancoDeDados, testeOkr){
         if (testeOkr == 1){
-      const  createProfileUser = createNewOkrCycle(profileUserBancoDeDados);
-      return (createProfileUser);
-    }
-    else if  (testeOkr == 2){
       const  attProfileUser = attCardOkrUser(profileUserBancoDeDados);
       return (attProfileUser);
     }
-    if (testeOkr == 3){
+    if (testeOkr == 2){
       const  deleteProfileUser = deleteOkrCycle(profileUserBancoDeDados);
       return (deleteProfileUser);
     }
@@ -31,12 +57,15 @@ export function getTeste(){
     
 export function createNewOkrCycle(profileUser){
   //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-  perfil.okr.lastMeeting = '12/02/2021' ;
+  const perfil = profileUser;  
+  const getDate = getDateOkrTest();
+      perfil.okr.lastMeeting = getDate ; 
   //perfil.okr.lastMeeting = var1 ;
-  perfil.okr.cycleDuration = 3;
+  const cycle= getCycleOkr();
+  perfil.okr.cycleDuration = cycle;
   //perfil.okr.cycleDuration = var2;
-  perfil.okr.totalCycles = '';   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
+  const getFinished = getFinishedOkrTest();
+  perfil.okr.totalCycles = getFinished;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
   perfil.okr.totalCycles = contTotalOkrCycles(perfil);
   perfil.okr.existCycle = true;
   //aqui vai mudar, vai ser uma função de calcular em OKR
@@ -47,12 +76,15 @@ return(perfil);
 }
 
 export function attCardOkrUser(profileUser){
-    const perfil = profileUser;
-    perfil.okr.lastMeeting = '22/01/2021' ;
+    const perfil = profileUser;  
+    const getDate = getDateOkrTest();
+        perfil.okr.lastMeeting = getDate ; 
     //perfil.okr.lastMeeting = var1 ;
-    perfil.okr.cycleDuration = 6;
+    const cycle= getCycleOkr();
+    perfil.okr.cycleDuration = cycle;
     //perfil.okr.cycleDuration = var2;
-    perfil.okr.totalCycles = 4;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
+    const getFinished = getFinishedOkrTest();
+    perfil.okr.totalCycles = getFinished;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
     perfil.okr.totalCycles = contTotalOkrCycles(perfil);
     perfil.okr.existCycle = true;
     //aqui vai mudar, vai ser uma função de calcular em OKR
@@ -82,8 +114,9 @@ return(perfil);
 
 export function createNewFeedbackCycle(profileUser){
   //Função que vem do botão que vai add nova função ou novo ciclo, ela pega o usuario e atualiza os dados do profile
-    const perfil = profileUser;
-  perfil.feedback.lastMeeting = '12/02/2021' ;
+  const perfil = profileUser;
+  const getDate = getDateFeedbackTest();
+  perfil.feedback.lastMeeting = getDate ;
   //perfil.feedback.lastMeeting = var1 ;
   perfil.feedback.cycle = 3;
   //perfil.feedback.cycle = var2;
@@ -98,14 +131,15 @@ return(perfil);
 }
 
 export function attCardUser(profileUser){
-    const perfil = profileUser;
-  perfil.feedback.lastMeeting = '02/05/2021' ;
-  //perfil.feedback.lastMeeting = var1 ;
-  perfil.feedback.cycle = 6;
-  //perfil.feedback.cycle = var2;
+    const perfil = profileUser; 
+    const getDate = getDateFeedbackTest();
+    perfil.feedback.lastMeeting = getDate ;
+    const cycle= getCycleFeedback();
+  perfil.feedback.cycle = cycle;  
+  const getFirstFeedback = getDateFirstFeedback();
+  perfil.feedback.lastMeeting = getFirstFeedback;
   perfil.feedback.firstMeeting = '12/01/2021';
-  //perfil.feedback.firstMeeting = var3  ;
-  perfil.feedback.totalCycles = 2;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
+//  perfil.feedback.totalCycles = 2;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
   perfil.feedback.totalCycles = contTotalCycles(perfil);
   perfil.feedback.existCycle = true;
   perfil.feedback.nextCycle = calculateFeedbackNextCycle(profileUser);
@@ -163,21 +197,25 @@ export function CalculateStatus(profileUser){
 }
 
 export function CalculateOkrStatus(profileUser){
+  const days =30;
   const perfil = profileUser;
   const LastMeeting = perfil.okr.lastMeeting;
   const TimeCycle = MultiplierMonthDays(perfil.okr.cycleDuration) ; 
+  console.log(TimeCycle);
   const CalculateStatus = CalculateDiffDate(LastMeeting) ;
+  console.log(CalculateStatus);
   const Finished =  CalculateFinished(TimeCycle, perfil.okr.totalCycles);
+  console.log(Finished);
 
-                if(Finished < 35){
+                if(Finished <=  days ){
                                         return (perfil.okr.status = 'finalizado')
                 }
-              else if(Finished >= 35){
+              else if(Finished > days ){
   //primeiro verificar condição de finalizado (if else) depois vai entrar isso que já tem de em dia/atrasado
-                                        if (CalculateStatus <=TimeCycle ){
+                                        if (CalculateStatus <= days){
                                           return (perfil.okr.status = 'em dia');
                                         }
-                                      else if  (CalculateStatus > TimeCycle ){
+                                      else if  (CalculateStatus > days){
                                         return (perfil.okr.status = 'atrasado');                    
                                         }
                 }

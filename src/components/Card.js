@@ -12,11 +12,7 @@ import { deleteOkrCycle } from './Functions';
 import { attCardUser } from './Functions';
 import { deleteFeedbackCycle } from './Functions';
 import { CreateUser } from './UserProfile';
-
-
-
-
-
+import { getUser } from './UserProfile';
 
 const useCard = makeStyles ({
 
@@ -222,7 +218,6 @@ const useCard = makeStyles ({
 
 });
 
-
 export function FeedbackCard() {
   // coloquei inicialmente td aqui dentro dessa função, posteriormente vai sair e ir pra uma verificar status, card etc e que vai chamar essa aqui
   const classes = useCard();
@@ -339,12 +334,9 @@ export function FeedbackCard() {
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                         <a className={classes.textDisplayBold}>Duração do ciclo</a>
                                                                                                                         <a className={classes.textDisplayNormal}>{perfil.okr.cycleDuration} meses</a>
-                                                                                                            </div>
+                                                                                                            </div>  
                                                                                                             <div className={classes.displayStatusColumn}>
-                                                                                                            <a className={classes.textDisplayBold}>Ciclo total(vai sair essa div, só pra visualização)</a>
-                                                                                                                        <a className={classes.textDisplayNormal}>{perfil.okr.totalCycles}</a>
-                                                                                                              </div>
-
+                                                                                                            </div>                                                                                                        
                                                                                     </div>  
                                                                     </div>      
                                                         </div>   
@@ -402,36 +394,7 @@ alert(perfil.feedback.LastMeeting);
   return(perfil);  
   }
 
-export function getUser(userPerfil) {
-  //Função para receber o usuário
-    const profileUserBancoDeDados = userPerfil;
-    //Teste funcional para verificar a criação, edição e delete de cards. 
-    //Cria e edita estão com estruturas iguais por enquanto, quando 
-    // criar função de edição eles ficarão com estrutura diferente
-    // 1 = cria    2 = edita   3= deleta
-    const teste = getTeste();
-    const testeOkr = getTesteOkr();
-                                  if (teste == 1){
-                                    const createProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
-                                    const  createProfileUserSent = createNewFeedbackCycle(createProfileUser);
-                                    return (createProfileUserSent);
-                                  }
-                                  else if  (teste == 2){
-                                    const  attProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
-                                    const  attProfileUserSent = attCardUser(attProfileUser);
-                                    return (attProfileUserSent);
-                                  }
-                                  if (teste == 3){
-                                    const deleteProfileUser = getTesteCreateOkr(profileUserBancoDeDados, testeOkr);
-                                  const  deleteProfileUserSent = deleteFeedbackCycle(deleteProfileUser);
-                                    return (deleteProfileUserSent);
-                                  }
-                                  else {
-                                  return(profileUserBancoDeDados);
-                                  console.log('chegou condição 4');
-                                  console.log(profileUserBancoDeDados.feedback.status);
-                                  }
-}
+
 
 
 //NEssa função devo receber o onclick da tela adicionar reuniao com os parametros depois salvar no usuario

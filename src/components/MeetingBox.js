@@ -9,6 +9,7 @@ import Tooltip from 'react-tooltip';
 import { openCard } from '../components/Card';
 import { addNewFeedbackCardButton } from '../components/Card';
 import { deleteFeedbackCardButton } from './Card';
+import React from 'react';
 
 
 //yarn add react-tooltip
@@ -116,7 +117,7 @@ const useMeetingBoxStyle = makeStyles ({
     alignItems: 'center',
                       
   },
-
+  
 });
 
 export function MeetingBox() {
