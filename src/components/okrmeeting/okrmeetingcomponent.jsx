@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#FCF8FF",
   },
   flexCard: {
+    left: 50,
     width: 406,
     height: 126,
     backgroundColor: "#FCF8FF",
@@ -67,7 +68,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function OkrMeetingComponent() {
+export function OkrMeetingComponent(props) {
   const {
     card,
     flexCard,
@@ -79,23 +80,22 @@ export function OkrMeetingComponent() {
     noInformation,
     addIcon,
   } = useStyles();
-  const [meeting, setMeeting] = useState(null);
 
   return (
-    <div className={!meeting ? card : flexCard}>
-      {!meeting ? (
+    <div className={props.meeting.firstMeeting ? card : flexCard}>
+      {props.meeting.firstMeeting ? (
         <>
           <h4 className={status}>Status:</h4> <p className={late}>atrasado</p>
           <div className={meetingInfo}>
             <div>
               <h4 className={infoTitle}>Próxima reunião</h4>{" "}
-              <p className={dates}>25/04/2021</p>
+              <p className={dates}>{props.meeting.firstMeeting}</p>
               <h4 className={infoTitle}>Última reunião de Okr:</h4>{" "}
-              <p className={dates}>25/03/2021</p>{" "}
+              <p className={dates}>{props.meeting.lastMeeting}</p>{" "}
             </div>
             <div>
               <h4 className={infoTitle}>Duração do ciclo</h4>{" "}
-              <p className={dates}>3 meses</p>
+              <p className={dates}>{props.meeting.cycleDuration}</p>
             </div>
           </div>
         </>

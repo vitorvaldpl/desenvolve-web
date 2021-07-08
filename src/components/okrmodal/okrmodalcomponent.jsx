@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core";
 import { borders } from "@material-ui/system";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   modalCard: {
+    position: "absolute",
     padding: theme.spacing(1.5),
     alignItems: "center",
     width: 474,
@@ -51,7 +53,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function OkrModalComponent() {
+const modalStyle = {
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
+
+export function OkrModalComponent(props) {
+  const [cycleDuration, setCycleDuration] = useState("");
+  const [firstMeeting, setFirstMeeting] = useState("");
+  const [lastMeeting, setLastMeeting] = useState("");
+
   const {
     modalCard,
     principalText,
@@ -61,8 +73,13 @@ export function OkrModalComponent() {
 
     addBottom,
   } = useStyles();
+
+  const handleAdd = () => {
+    props.handleAdd({ cycleDuration, firstMeeting, lastMeeting });
+  };
+
   return (
-    <div className={modalCard}>
+    <div className={modalCard} style={modalStyle}>
       <h4 className={principalText}>
         Preencha os espaços para gerenciar suas reuniões de OKR
       </h4>
@@ -71,19 +88,27 @@ export function OkrModalComponent() {
           className={placeholder}
           type="text"
           placeholder="Tempo de  ciclo(só tem opção de 3 ou 6 meses)"
+          onChange={(event) => setCycleDuration(event.target.value)}
         />
         <input
           className={placeholder}
           type="text"
           placeholder="Data da primeira reunião de OKR"
+          onChange={(event) => setFirstMeeting(event.target.value)}
         />
         <input
           className={recentMeeting}
           type="date"
           placeholder="Data da reunião de OKR mais recente"
+          onChange={(event) => setLastMeeting(event.target.value)}
         />
 
-        <input className={addBottom} type="button" value="Adicionar" />
+        <input
+          className={addBottom}
+          type="button"
+          value="Adicionar"
+          onClick={handleAdd}
+        />
       </div>
     </div>
   );

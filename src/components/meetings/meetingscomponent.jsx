@@ -47,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 export function MeetingsComponent() {
   const [open, setOpen] = useState(false);
   const { base, mockBox, cardTitle, infoIcon, addIcon } = useStyles();
+  const [meeting, setMeeting] = useState({});
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -54,6 +56,12 @@ export function MeetingsComponent() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleAddMeeting = (meeting) => {
+    setMeeting(meeting);
+    handleClose();
+  };
+
   return (
     <>
       <div className={base}>
@@ -71,7 +79,7 @@ export function MeetingsComponent() {
             className={addIcon}
             style={{ fill: "#4D4D4D" }}
           />
-          <OkrMeetingComponent />
+          <OkrMeetingComponent meeting={meeting} />
         </div>
       </div>
 
@@ -81,7 +89,7 @@ export function MeetingsComponent() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <OkrModalComponent />
+        <OkrModalComponent handleAdd={handleAddMeeting} />
       </Modal>
     </>
   );
