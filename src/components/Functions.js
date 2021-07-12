@@ -49,7 +49,7 @@ return(dateFormated);
 
 
 export function getDateFeedbackTest(){ //Data manual que será enviada para o card Feedback
-  const getDate = '28/05/2021';
+  const getDate = '28/03/2021';
   return(getDate);
   }
   export function getDateOkrTest(){ //Data manual que será enviada para o card  Okr
@@ -64,12 +64,12 @@ export function getDateFeedbackTest(){ //Data manual que será enviada para o ca
     return(getDate);
   }
   export function getDateFirstFeedback(){ //Data manual do 1° Feedback que será enviada para o card Feedback
-  const getDate = '28/05/2021';
+  const getDate = '10/05/2021';
   return(getDate);
   }
   export function getFinishedOkrTest(){    //Conferir ciclo Finalizado, será o numero de reuniões que ja houve no periodo
     // Exemplo se tiver 5, incrementara e irá pra 6 lá na função attOkrcard e ficara finalizado 
-    const getCycles = 4;
+    const getCycles = 1;
   return(getCycles);
   }
 export function getTeste(){  // 1 = card  2 = card vazio

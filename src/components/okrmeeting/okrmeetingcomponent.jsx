@@ -119,7 +119,7 @@ export function OkrMeetingComponent(props) {
           <h4 className={noInformation}>
             Não há gerenciamento de feedback criado
           </h4>
-           <AddBoxRoundedIcon className={addIcon} /> 
+           <AddBoxRoundedIcon className={addIcon}  /> 
         </> 
       )}
     </div>

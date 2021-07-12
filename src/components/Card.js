@@ -330,7 +330,7 @@ export function FeedbackCard(props) {
                                                                                                             </div>
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                         <div className={classes.boxDisplayAdd}>
-                                                                                                                                        <a className={classes.textDisplayBold}>Última reunião de Okr</a>
+                                                                                                                                        <a className={classes.textDisplayBold}>Última reunião Okr</a>
                                                                                                                                         <button className={classes.buttonNew} >
                                                                                                                                         <MoreVertOutlinedIcon />       
                                                                                                                                                                                      
@@ -358,17 +358,3 @@ export function FeedbackCard(props) {
                                         );
                                         
 } 
-
-
-
-
-//NEssa função devo receber o onclick da tela adicionar reuniao com os parametros depois salvar no usuario
-// attCardUser(profileUser, var1, var2, var3, var4) sendo var 1,2,3 os parametros que vem da tela 
-// createcard funcionará na mesma lógica
-//cretenew att card e delete feedback fazem parte do teste funcional pra 
-//visualizar o card e fazer as contas
-//possivelmente deletcard sera criado no botao lixeira para "limpar" o gerenciador de card
-//attcard ou createnewfeedcycle poderão ser usados como função ponte do calculo status
-//cujo se pegará as info do banco de dados e realizar o calculo da função
-// tem a possibilidade dessa conta ser feita direto no backend(verificar possibilidade)
-
