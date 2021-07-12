@@ -1,5 +1,6 @@
 
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from "@material-ui/core/styles";
+import { Modal } from "@material-ui/core";
 import { CardOKR } from '../components/Card';
 import { FeedbackCard } from '../components/Card';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -10,11 +11,53 @@ import { openCard } from '../components/Card';
 import { addNewFeedbackCardButton } from '../components/Card';
 import { deleteFeedbackCardButton } from './Card';
 import React from 'react';
+import { useState } from 'react';
+import { OkrMeetingComponent } from "../components/okrmeeting/okrmeetingcomponent";
+import { OkrModalComponent } from "../components/okrmodal/okrmodalcomponent";
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
+import { EmptyCardOKR } from "./EmptyCard";
+
 
 
 //yarn add react-tooltip
 
-
+const useStyles = makeStyles((theme) => ({
+  base: {
+    display: "flex",
+    width: 894,
+    height: 181,
+    backgroundColor: theme.palette.common.white,
+    borderRadius: theme.shape.borderRadius,
+    padding: 10,
+    justifyContent: "space-evenly",
+  },
+  mockBox: {
+    width: 402,
+    height: 126,
+    backgroundColor: "#FCF8FF",
+  },
+  cardTitle: {
+    display: "inline",
+    height: 24,
+    width: 124,
+    left: 238,
+    top: 139,
+    fontFamily: "Poppins",
+    fontStyle: "Normal",
+    fontWeight: 600,
+    fontSize: 16,
+    lineHeight: "24px",
+    borderBottomColor: "#3E3990",
+  },
+  infoIcon: {
+    height: 12.5,
+    width: 12.5,
+  },
+  addIcon: {
+    height: 15,
+    width: 15,
+  },
+}));
 
 
 const useMeetingBoxStyle = makeStyles ({
@@ -120,10 +163,29 @@ const useMeetingBoxStyle = makeStyles ({
   
 });
 
+
+
 export function MeetingBox() {
   const classes = useMeetingBoxStyle();
 
+  const [open, setOpen] = useState(false);
+  const { base, mockBox, cardTitle, infoIcon, addIcon } = useStyles();
+  const [meeting, setMeeting] = useState({});
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddMeeting = (meeting) => {
+    setMeeting(meeting);
+    handleClose();
+  };
   return (
+    <>
                   <div className={classes.meetingBox}>
                       <div className={classes.halfBox}>
                                   <div className={classes.displayBox}>
@@ -144,16 +206,18 @@ export function MeetingBox() {
                                                                 data-background-color="#FCF8FF"
                                                                 >
                                                                 <InfoOutlinedIcon />    
-                                                                <Tooltip /> 
+                                                                <Tooltip  /> 
                                                                 </p>                                                    
                                             </div>  
+                                            <button  className={classes.button}   >
+                                                        <div>
+                                                                    <AddBoxRoundedIcon
+                                                                      className={addIcon}
+                                                                      style={{ fill: "#4D4D4D" }}
+                                                                    />
+                                                          </div>                                                    
+                                            </button>
                                             
-                                            <button  className={classes.button} onClick={()=> addNewFeedbackCardButton()}  >
-                                            <AddBoxIcon />                                                      
-                                            </button>
-                                            <button  className={classes.button} onClick={()=> deleteFeedbackCardButton()}  >
-                                            <DeleteOutlineOutlinedIcon />                                                      
-                                            </button>
                                 </div> 
                                 <div className={classes.cardBox}>
                                     {/* Aqui vai chamar uma função verifica feedback e nao o card */}
@@ -181,20 +245,33 @@ export function MeetingBox() {
                                                         <Tooltip /> 
                                                         </p>                                                    
                                             </div>  
-                                            <button  className={classes.button} onclick=' '  >
-                                            <AddBoxIcon />                                                      
-                                            </button>
+                                            <button  className={classes.button}  >
+                                            
+                                                        <AddBoxRoundedIcon
+                                                          onClick={handleOpen}
+                                                          className={addIcon}
+                                                          style={{ fill: "#4D4D4D" }}
+                                                        />                                                                                                      
+                                            </button>                                            
                                 </div> 
                                 
                                 <div className={classes.cardBox}>
-                                  {/* Aqui vai chamar uma função OKR que retornara o card okr ou empty card, similar a feedback já criada */}
-                                  <CardOKR />
+                                              {meeting.lastMeeting  ? ( <CardOKR meeting={meeting}/>                                                
+                                              ) : (<EmptyCardOKR  />)
+                                              }                                              
                                 </div>  
                       </div>    
-                  </div>   
+                  </div>  
+                        <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                      >
+                        <OkrModalComponent handleAdd={handleAddMeeting} />
+                      </Modal> 
+
+                      </>
   );
 }
-
-
-
 

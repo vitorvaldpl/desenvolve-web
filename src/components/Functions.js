@@ -1,15 +1,67 @@
-import { fade, makeStyles } from '@material-ui/core/styles';
+/* import { fade, makeStyles } from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { CreateUser } from './UserProfile';
+
+import { OkrMeetingComponent } from "../components/okrmeeting/okrmeetingcomponent";
+import { OkrModalComponent } from "../components/okrmodal/okrmodalcomponent"; *//* 
+import { SendCardLastMeeting } from "../components/okrmeeting/okrmeetingcomponent";
+import { SendCardCycleDuration } from "../components/okrmeeting/okrmeetingcomponent"; */
+
+
+//import { SendCardFirstMeeting } from "../components/meetings/meetingscomponent";
+
+
+
+export function SendCardCycleDuration (cycleOkr){
+  if (typeof cycleOkr!== 'undefined' && cycleOkr !== null ) {          
+  const getTestCycleOkr = cycleOkr;
+return(getTestCycleOkr);
+}
+const getTeste = cycleOkr;
+return(getTeste);
+
+}
+
+export function SendCardLastMeeting (date){
+if (typeof date!== 'undefined' && date !== null ) {
+
+const getTestLastMeeting = FormatDate(date);
+return(getTestLastMeeting);
+}
+}
+export function SendCardFirstMeeting (date){
+const getTestFirstMeeting = date;
+return(getTestFirstMeeting);
+}
+
+
+function FormatDate(getDate){
+if (typeof getDate !== 'undefined' && getDate !== null) {
+const dateInput =getDate;
+const newDate = new Date(dateInput);
+const dateFormated = newDate.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+return(dateFormated);
+}
+
+}
+
+
 export function getDateFeedbackTest(){ //Data manual que será enviada para o card Feedback
   const getDate = '28/05/2021';
   return(getDate);
   }
   export function getDateOkrTest(){ //Data manual que será enviada para o card  Okr
-  const getDate = '09/06/2021';
-  return(getDate);
+    var elementoNull = document.getElementById('lastMeeting');
+        if (document.getElementById('TargetLastMeeting') !== null) {
+                var elemento = document.getElementById('TargetLastMeeting').value;
+                const getDate =SendCardLastMeeting (elemento);
+                return(getDate);
+                } 
+    const getDate =SendCardLastMeeting (elementoNull);
+  
+    return(getDate);
   }
   export function getDateFirstFeedback(){ //Data manual do 1° Feedback que será enviada para o card Feedback
   const getDate = '28/05/2021';
@@ -33,8 +85,15 @@ export function getTeste(){  // 1 = card  2 = card vazio
       return(cycle);
       }
       export function getCycleOkr(){  // 3= ciclo 3 meses   6 = ciclo de 6 meses
-        var cycle= 6;
-        return(cycle);
+        var cycleNull = document.getElementById('CycleOkr');
+        if (document.getElementById('TargetCycleOkr') !== null) {
+                var cycleOkr = document.getElementById('TargetCycleOkr').value;
+                const CycleOkr =SendCardCycleDuration(cycleOkr);
+                return(CycleOkr);
+                } 
+    const getCycleOkrNull =SendCardCycleDuration(cycleNull);
+  
+    return(getCycleOkrNull);
         }
 
   export function getTesteCreateOkr(profileUserBancoDeDados, testeOkr){
@@ -76,7 +135,7 @@ export function attCardOkrUser(profileUser){
         perfil.okr.lastMeeting = getDate ; 
     //perfil.okr.lastMeeting = var1 ;
     const cycle= getCycleOkr();
-    perfil.okr.cycleDuration = cycle;
+        perfil.okr.cycleDuration = cycle;
     //perfil.okr.cycleDuration = var2;
     const getFinished = getFinishedOkrTest();
     perfil.okr.totalCycles = getFinished;   //Aqui vai sair pois buscara direto dentro da função e tera registro no banco dados do usuário
@@ -194,11 +253,12 @@ export function CalculateOkrStatus(profileUser){
   const perfil = profileUser;
   const LastMeeting = perfil.okr.lastMeeting;
   const TimeCycle = MultiplierMonthDays(perfil.okr.cycleDuration) ; 
-  console.log(TimeCycle);
+//  console.log('Tempo de duração ciclo(dias)',TimeCycle);
   const CalculateStatus = CalculateDiffDate(LastMeeting) ;
-  console.log(CalculateStatus);
+//  console.log('Dias desde a ultima reunião',CalculateStatus);
   const Finished =  CalculateFinished(TimeCycle, perfil.okr.totalCycles);
-  console.log(Finished);
+  //console.log('N° de reuniões',perfil.okr.totalCycles+1);
+  //console.log('Calculo de finalizado',Finished);
 
                 if(Finished <=  days ){
                                         return (perfil.okr.status = 'finalizado')
@@ -222,24 +282,31 @@ export function CalculateFinished(TimeCycle, totalCycles){
 }
 
 export function CalculateDiffDate(LastMeeting ){
-  var lastDate = TransformDate(LastMeeting) ; 
-  var currentData = new Date();
-  var timeDiff = Math.abs(currentData.getTime() - lastDate.getTime());
-  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-  return(diffDays);
+  var lastDate = TransformDate(LastMeeting) ;
+          if (typeof lastDate !== 'undefined') {
+ 
+          var currentData = new Date();
+          var timeDiff = Math.abs(currentData.getTime() - lastDate.getTime());
+          var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+          return(diffDays);
+        }
 }
 
 export function TransformDate(stringDate){
   //Transforma a String Data em um formato universal do sistema, facilita para realizar contas com data.
-let date = stringDate;
-//  Quebra a string para retornar cada parte
-const dateSplit = date.split('/');
-const day = dateSplit[0]; 
-const month = dateSplit[1]; 
-const year = dateSplit[2]; 
-// Agora podemos inicializar o objeto Date, lembrando que o mês começa em 0, então fazemos -1.
-date = new Date(year, month - 1, day);
-return(date);
+  let date = stringDate;
+  if (typeof date !== 'undefined') {
+                  
+                  //  Quebra a string para retornar cada parte
+                  const dateSplit = date.split('/');
+                  const day = dateSplit[0]; 
+                  const month = dateSplit[1]; 
+                  const year = dateSplit[2]; 
+                  // Agora podemos inicializar o objeto Date, lembrando que o mês começa em 0, então fazemos -1.
+                  date = new Date(year, month - 1, day);
+                  return(date);
+                  }
+  return(date);                
 }
 
 export function calculateFeedbackNextCycle(profileUser){
@@ -252,6 +319,7 @@ export function calculateFeedbackNextCycle(profileUser){
   }
 
   export function calculateOkrNextCycle(profileUser){
+    //123aqui deve conferir , vem ates de next okr cycle
     const perfil = profileUser;
     //é valido Salvar as reuniões em um vetor? total de ciclos ficaria função lenght
     const LastMeeting = perfil.okr.lastMeeting;
@@ -261,19 +329,27 @@ export function calculateFeedbackNextCycle(profileUser){
     }
 
     export function CalculateNextCycle(LastMeeting , TimeCycle){
-      var lastDate = TransformDate(LastMeeting) ;  
-      var timeDiff = Math.abs((TimeCycle*(1000 * 3600 * 24) + lastDate.getTime()));
-      var DateTransformed = formatDateToString(timeDiff);
-    return(DateTransformed);  
+      //123aqui  nao precisa mexer ainda pq nao entrou o ciclo de feedback
+      var lastDate = TransformDate(LastMeeting);
+                  if (typeof lastDate !== 'undefined') {
+                    
+                  var timeDiff = Math.abs((TimeCycle*(1000 * 3600 * 24) + lastDate.getTime()));
+                  var DateTransformed = formatDateToString(timeDiff);
+                return(DateTransformed);  
+                  }
     }
 
     export function CalculateNextOkrCycle(LastMeeting ){
+      //123aqui transform date
       var lastDate = TransformDate(LastMeeting) ;  
-      var days = 30;
-      var timeDiff = Math.abs((days*(1000 * 3600 * 24) + lastDate.getTime()));
-      var DateTransformed = formatDateToString(timeDiff);
-    return(DateTransformed);  
-    }
+                  if (typeof lastDate !== 'undefined') {
+                    
+                    var days = 30;
+                    var timeDiff = Math.abs((days*(1000 * 3600 * 24) + lastDate.getTime()));
+                    var DateTransformed = formatDateToString(timeDiff);
+                  return(DateTransformed);  
+                }
+  }
 
 function formatDateToString(getDate){
   var date =  new Date(getDate);

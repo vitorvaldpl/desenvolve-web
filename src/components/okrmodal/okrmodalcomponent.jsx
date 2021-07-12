@@ -77,20 +77,34 @@ export function OkrModalComponent(props) {
   const handleAdd = () => {
     props.handleAdd({ cycleDuration, firstMeeting, lastMeeting });
   };
-
+  
+  
   return (
     <div className={modalCard} style={modalStyle}>
       <h4 className={principalText}>
         Preencha os espaços para gerenciar suas reuniões de OKR
       </h4>
       <div className={rectangle} text>
-        <input
+{/*         <input
           className={placeholder}
           type="text"
           placeholder="Tempo de  ciclo(só tem opção de 3 ou 6 meses)"
           onChange={(event) => setCycleDuration(event.target.value)}
-        />
-        <input
+          id = 'TargetCycleOkr'          
+        /> */}
+                              <select
+                              className={placeholder}
+                              options = {3,6}
+                              type="text"
+                              placeholder="Tempo de  ciclo(só tem opção de 3 ou 6 meses)"
+                              onChange={(event) => setCycleDuration(event.target.value)}
+                              id = 'TargetCycleOkr' 
+                              onfocus="(this.type='date')"  >
+                                <option value="" disabled selected >Tempo de  ciclo</option>
+                              <option value="3">3 meses</option>
+                              <option value="6">6 meses</option>         
+                              </select>
+          <input
           className={placeholder}
           type="text"
           placeholder="Data da primeira reunião de OKR"
@@ -101,13 +115,14 @@ export function OkrModalComponent(props) {
           type="date"
           placeholder="Data da reunião de OKR mais recente"
           onChange={(event) => setLastMeeting(event.target.value)}
+          id = 'TargetLastMeeting'
         />
 
         <input
           className={addBottom}
           type="button"
           value="Adicionar"
-          onClick={handleAdd}
+          onClick={handleAdd}          
         />
       </div>
     </div>

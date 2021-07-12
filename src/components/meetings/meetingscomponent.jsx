@@ -61,7 +61,7 @@ export function MeetingsComponent() {
     setMeeting(meeting);
     handleClose();
   };
-
+  
   return (
     <>
       <div className={base}>
@@ -70,10 +70,10 @@ export function MeetingsComponent() {
           <InfoOutlinedIcon className={infoIcon} style={{ fill: "#D1C4E9" }} />{" "}
           <AddBoxRoundedIcon className={addIcon} style={{ fill: "#4D4D4D" }} />
           <div className={mockBox}></div>
-        </div>
+        </div> 
         <div>
-          <h4 className={cardTitle}>Reuniões OKR's</h4>{" "}
-          <InfoOutlinedIcon className={infoIcon} style={{ fill: "#D1C4E9" }} />{" "}
+           <h4 className={cardTitle}>Reuniões OKR's</h4>{" "}
+          <InfoOutlinedIcon className={infoIcon} style={{ fill: "#D1C4E9" }} />{" "} 
           <AddBoxRoundedIcon
             onClick={handleOpen}
             className={addIcon}
@@ -94,3 +94,4 @@ export function MeetingsComponent() {
     </>
   );
 }
+

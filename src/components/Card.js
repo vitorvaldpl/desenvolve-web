@@ -1,19 +1,13 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
-import { getTeste } from './Functions';
-import { getTesteOkr } from './Functions';
-import { getTesteCreateOkr } from './Functions';
-import { createNewFeedbackCycle } from './Functions';
-import { createNewOkrCycle } from './Functions';
-import { attCardOkrUser } from './Functions';
-import { deleteOkrCycle } from './Functions';
-import { attCardUser } from './Functions';
-import { deleteFeedbackCycle } from './Functions';
 import { CreateUser } from './UserProfile';
 import { getUser } from './UserProfile';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
+import { useState } from "react";
+import { Modal } from "@material-ui/core";
+import { OkrModalComponent } from "../components/okrmodal/okrmodalcomponent";
 
 const useCard = makeStyles ({
 
@@ -219,7 +213,7 @@ const useCard = makeStyles ({
 
 });
 
-export function FeedbackCard() {
+export function FeedbackCard(props) {
   // coloquei inicialmente td aqui dentro dessa função, posteriormente vai sair e ir pra uma verificar status, card etc e que vai chamar essa aqui
   const classes = useCard();
   const userPerfil = CreateUser();
@@ -243,7 +237,7 @@ export function FeedbackCard() {
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                           <div className={classes.boxDisplayAdd}>
                                                                                                                           <a className={classes.textDisplayBold}>Último Feedback</a>
-                                                                                                                                        <button className={classes.buttonNew} onClick={()=> attCardButton()} >
+                                                                                                                                        <button className={classes.buttonNew}  >
                                                                                                                                         <MoreVertOutlinedIcon />                                                    
                                                                                                                                         </button>                                                                                                                                        
                                                                                                                         </div>    
@@ -282,7 +276,7 @@ export function FeedbackCard() {
                                                     </div>  
                                                 
                                                    <div className={classes.AddBoxIcon} >
-                                                   <button   className={classes.buttonNew} onClick={()=> addNewFeedbackCardButton()}  >
+                                                   <button   className={classes.buttonNew}  >
                                                                       <AddBoxIcon />                                                      
                                                                       </button>          
                                                                       
@@ -297,9 +291,29 @@ export function FeedbackCard() {
   const classes = useCard();  
   const userPerfil = CreateUser();
   const perfil = getUser(userPerfil); 
-                                        if (perfil.okr.existCycle === true){  
+  const [open, setOpen] = useState(false);
+  const [meeting, setMeeting] = useState({});
+  
+  const { base, mockBox, cardTitle, infoIcon, addIcon } = useCard();
 
-                                        return (
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddMeeting = (meeting) => {
+    setMeeting(meeting);
+    handleClose();
+  };
+  const statusOrkColor = {
+    'em dia': '#00B4C5',
+    'atrasado': '#E82F58',
+    'finalizado': 'green',
+  };  
+                                          return (
                                                         <div className={classes.cardBox}>
                                                                     <div className={classes.DivBox}>
                                                                                     <div className={classes.FeedbackHalfBox}>
@@ -307,9 +321,7 @@ export function FeedbackCard() {
                                                                                                             <div className={classes.displayStatusLine}>
                                                                                                                         <a className={classes.textDisplayNormal}>Status: </a>
                                                                                                                         <a className={classes.textDisplayStatus} style={
-
-                                                                                                                                              ({color:perfil.okr.status === 'atrasado' ? '#E82F58' : '#00B4C5'})
-                                                                                                                                                                                                                                              
+                                                                                                                                        ({color: statusOrkColor[perfil.okr.status]})                                                                                                                                                                                                                                              
                                                                                                                           } >{perfil.okr.status}</a>
                                                                                                             </div>  
                                                                                                             <div className={classes.displayStatusColumn}>
@@ -319,7 +331,7 @@ export function FeedbackCard() {
                                                                                                             <div className={classes.displayStatusColumn}>
                                                                                                                         <div className={classes.boxDisplayAdd}>
                                                                                                                                         <a className={classes.textDisplayBold}>Última reunião de Okr</a>
-                                                                                                                                        <button className={classes.buttonNew} onClick={()=> alertFunction()}>
+                                                                                                                                        <button className={classes.buttonNew} >
                                                                                                                                         <MoreVertOutlinedIcon />       
                                                                                                                                                                                      
                                                                                                                                         </button>                                                                                                                                                                                                                                                                            
@@ -344,58 +356,8 @@ export function FeedbackCard() {
                                                                     </div>      
                                                         </div>   
                                         );
-                                      
-                                      }
-
-                                        if (perfil.okr.existCycle === false)  {
-                                            
-                                        return (
-                                                        <div className={classes.cardBox}>
-                                                                <div className={classes.titleBox}>
-                                                                          <a>Não há gerenciamento de feedback criado</a>
-                                                                </div>  
-                                                                <div className={classes.AddBoxIcon}>
-                                                                                  <button  className={classes.buttonNew}onClick={()=> alertFunction()} >
-                                                                                  <AddBoxIcon />                                                    
-                                                                                  </button>
-                                                                  </div>    
-                                                        </div>   
-                                        );
-                                        }
+                                        
 } 
-
-function alertFunction() {
-  alert("I am an alert box!");
-}
-export function getAddLastFeedback(userPerfil){
-const perfil = getUser(userPerfil); 
-perfil.feedback.LastMeeting = '20/06/2021';
-console.log(perfil.feedback.LastMeeting);
-alert(perfil.feedback.LastMeeting);
-
-  return(perfil);
-  }
-  export function addNewFeedbackCardButton(){
-    const perfil2 = CreateUser();   // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas 
-    const perfil =  createNewFeedbackCycle(perfil2);    
-    console.log(perfil);
-    alert(perfil.feedback.lastMeeting);
-  return(perfil);  
-  }
-  export function deleteFeedbackCardButton(){
-    const perfil2 = CreateUser();  // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas
-    const perfil =  deleteFeedbackCycle(perfil2);    
-    console.log(perfil);
-    alert(perfil.feedback.existCycle);
-  return(perfil);  
-  }
-  export function attCardButton(){
-    const perfil2 = CreateUser();  // O mais correto aqui é buscar no banco de daodos o usuário e retornar o perfil para mudar as infirmações desejadas
-    const perfil =  attCardUser(perfil2);    
-    console.log(perfil);
-    alert(perfil.feedback.lastMeeting);
-  return(perfil);  
-  }
 
 
 

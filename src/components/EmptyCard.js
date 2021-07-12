@@ -1,12 +1,8 @@
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import EmptyCardStyle from '../Styles/EmptyCardStyle';
-import { blue } from 'chalk';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import { makeStyles } from '@material-ui/core/styles';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
+import { Modal } from "@material-ui/core";
+import { OkrModalComponent } from "../components/okrmodal/okrmodalcomponent";
+import { useState } from 'react';
 
 
 const useEmptyCard = makeStyles ({
@@ -58,7 +54,7 @@ export function EmptyCard() {
                           </div>  
                       
                          <div className={classes.AddBoxIcon}>
-                                        <AddBoxIcon />  
+                                     <AddBoxRoundedIcon /> 
                           </div>            
                   </div>   
                   
@@ -69,21 +65,45 @@ export function EmptyCard() {
 
 export function EmptyCardOKR() {
   const classes = useEmptyCard();
+  const [open, setOpen] = useState(false);
+  const [meeting, setMeeting] = useState({});
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddMeeting = (meeting) => {
+    setMeeting(meeting);
+    handleClose();
+  };
   return (
-
+<>
                   <div className={classes.cardBox}>
                           <div className={classes.titleBox}>
                                     <a>Não há gerenciamento de feedback criado</a>
                           </div>  
                           <div className={classes.AddBoxIcon}>
-                                        <AddBoxIcon />  
+                          <AddBoxRoundedIcon
+                                                          onClick={handleOpen}
+                                                        /*   className={addIcon} */
+                                                          style={{ fill: "#4D4D4D" }}
+                                                        />   
                           </div>          
-                  </div>   
-                  
-
-
-  );
+                  </div>     
+                                                                                <Modal
+                                                                                open={open}
+                                                                                onClose={handleClose}
+                                                                                aria-labelledby="simple-modal-title"
+                                                                                aria-describedby="simple-modal-description"
+                                                                              >
+                                                                                <OkrModalComponent handleAdd={handleAddMeeting} />
+                                                                              </Modal>   
+    </>  
+                    );
 }
 
 

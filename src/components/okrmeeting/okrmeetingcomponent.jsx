@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import { useState } from "react";
 import AddBoxRoundedIcon from "@material-ui/icons/AddBoxRounded";
 
+
 const useStyles = makeStyles(() => ({
   card: {
     width: 406,
@@ -80,33 +81,49 @@ export function OkrMeetingComponent(props) {
     noInformation,
     addIcon,
   } = useStyles();
+  const [open, setOpen] = useState(false);
+  const [meeting, setMeeting] = useState({});
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-  return (
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddMeeting = (meeting) => {
+    setMeeting(meeting);
+    handleClose();
+  };
+   return (
     <div className={props.meeting.firstMeeting ? card : flexCard}>
       {props.meeting.firstMeeting ? (
         <>
-          <h4 className={status}>Status:</h4> <p className={late}>atrasado</p>
+           <h4 className={status}>Status:</h4> <p className={late}>atrasado</p>
           <div className={meetingInfo}>
             <div>
               <h4 className={infoTitle}>Próxima reunião</h4>{" "}
-              <p className={dates}>{props.meeting.firstMeeting}</p>
+              <p className={dates} >{props.meeting.firstMeeting}</p>
               <h4 className={infoTitle}>Última reunião de Okr:</h4>{" "}
-              <p className={dates}>{props.meeting.lastMeeting}</p>{" "}
+              <p className={dates} id='lastMeeting'>{props.meeting.lastMeeting}</p>{" "}
             </div>
             <div>
               <h4 className={infoTitle}>Duração do ciclo</h4>{" "}
-              <p className={dates}>{props.meeting.cycleDuration}</p>
+              <p className={dates} id = 'CycleOkr'>{props.meeting.cycleDuration}</p>
             </div>
-          </div>
+          </div> 
         </>
+
       ) : (
-        <>
+         <>
           <h4 className={noInformation}>
             Não há gerenciamento de feedback criado
           </h4>
-          <AddBoxRoundedIcon className={addIcon} />
-        </>
+           <AddBoxRoundedIcon className={addIcon} /> 
+        </> 
       )}
     </div>
   );
-}
+} 
+
+
